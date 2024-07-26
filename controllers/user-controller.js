@@ -15,44 +15,41 @@ const getUser = asyncHandler(async (req, res) => {
 
   res.status(200).json( users );
 });
-
-
-const createUser = asyncHandler(async(req, res) => {
-  const createUser = await Users.create({
-    title: req.body.title,
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirmation: req.body.passwordConfirmation,
+const signup = asyncHandler(async(req, res) => {
+    const { title, name, email, password, passwordConfirmation } = req.body;
+    if (!title || !name || !email || !password || !passwordConfirmation) {
+      return res.status(400).json({ message: "Os dados introduzidos não são válidos." });
+    }
   });
 
-  res.status(200).json({
-    message: "Dados enviados com sucesso!",
-    data: createUser,
+  const existingEmail = await Users.findOne({ where: { email } });
+  if (existingEmail) {
+    return res.status(400).json({ message: "O endereço introduzido já está registado." });
+  }
+  const createEmail = await Users.create({
+    title,
+    name,
+    email,
+    password,
+    passwordConfirmation,
   });
-});
+
+  res.status(201).json({
+    message: "Utilizador Criado com Sucesso!",
+    _id: createEmail.id, 
+  });
 
 
-const updateUser = (req, res) => {
-
-  const id = request.params.id
-  const { name, email, password, passwordConfirmation } = req.body
-
-  req.status(200).json({ message: 'Dados Actualizados' })
-};
 
 
-const deleteUser = asyncHandler(async (req, res) => {
-
-try{
-  const user = await Product.findByIdAndDelete(req.params.id);
-  res.status(200).json({ message: `Dados apagados com sucesso ${user}` });
-}
-catch(error){
-  res.status(500).json({message: error})
-}
-
-});
 
 
-module.exports = {getAllUser,getUser,createUser,updateUser,deleteUser }
+
+
+
+
+
+
+
+
+module.exports = {getAllUser,getUser,createUser, }
