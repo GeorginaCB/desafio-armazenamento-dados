@@ -5,4 +5,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use("/api/auth/user", require("./routes/desafio-route"));
+
+
+
+
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
