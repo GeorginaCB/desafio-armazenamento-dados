@@ -15,9 +15,9 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 const signup = asyncHandler(async (req, res) => {
-  const { title, name, email, password, passwordConfirmation } = req.body;
+  const { name, email, password, passwordConfirmation } = req.body;
 
-  if (!title || !name || !email || !password || !passwordConfirmation) {
+  if (!name || !email || !password || !passwordConfirmation) {
     return res.status(400).json({ message: "Os dados introduzidos não são válidos." });
   }
 
@@ -28,7 +28,6 @@ const signup = asyncHandler(async (req, res) => {
   }
 
   const createUser = await User.create({
-    title,
     name,
     email,
     password,
