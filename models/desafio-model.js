@@ -14,11 +14,11 @@ const usersSchema = mongoose.Schema(
       required: [true, "Por favor, introduza seu email"],
     },
     password: {
-      type: Number,
+      type: String,
       required: [true, "Por favor, introduza sua palavra passe"],
     },
     passwordConfirmation: {
-      type: Number,
+      type: String,
       required: [true, "Por favor, confirme sua palavra passe"],
     },
   
